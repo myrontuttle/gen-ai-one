@@ -100,25 +100,6 @@ act:
 	@./bin/act --env-file .env --secret-file .secrets
 
 
-# Gitlab CI locally
-GITLAB_CI_LOCAL_CMD=./node_modules/.bin/gitlab-ci-local
-install-gitlab-ci-local: install-npm-packages
-    # gitlab-ci-local is an npm package and is installed within the install-evaluation-app step
-	@echo "${GREEN}Installed gitlab-ci-local${NC}"
-	@echo "${GREEN}gitlab-ci-local version is $$($(NVM_USE) > /dev/null && $(GITLAB_CI_LOCAL_CMD) --version | tail -n 1) ${NC}"
-gitlab-ci-local:
-	@echo "${YELLOW}Running Gitlab Runner locally...${NC}"
-	@$(NVM_USE) && $(GITLAB_CI_LOCAL_CMD) --network=host --variables-file .env
-
-# clear GitHub and Gitlab CI local caches
-clear_ci_cache:
-	@echo "${YELLOW}Clearing CI cache...${NC}"
-	@echo "${YELLOW}Clearing gitlab ci local cache...${NC}"
-	rm -rf .gitlab-ci-local/cache
-	@echo "${YELLOW}Clearing Github ACT local cache...${NC}"
-	rm -rf ~/.cache/act ~/.cache/actcache
-
-
 ########## evaluation framework ###########
 PROMPTFOO_CMD=.././node_modules/.bin/promptfoo
 install-promptfoo:install-nvm
